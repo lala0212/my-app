@@ -15,7 +15,7 @@ export default function App() {
   const [check, setcheck] = useState(false);
   const fetchData = async () => {
     try {
-      AsyncStorage.removeItem('diary');
+      // AsyncStorage.removeItem('diary');
       const result = await checkIfClickedToday();
       setcheck(result);
     } catch (error) {

@@ -7,11 +7,17 @@ import ArcCard from '../myCard';
 const currentDate = moment().format('YYYY-MM-DD');
 
 export default function App({popup}) {
-  const markedDates={ [currentDate]: { selected: true, marked: true, selectedColor: '#3f5226', dotColor: 'transparent'}}
   const [selected, setSelected] = useState(" ");
   const [showCard, setShowCard] = useState(false); // 控制 Card 是否显示
   const opacity = useState(new Animated.Value(0))[0];
   const [showText, setShowText] = useState(" "); // 控制 Card 是否显示
+
+
+
+
+
+
+  
   useEffect(() => {
     if (selected !== " ") {
       setShowText(" ");
