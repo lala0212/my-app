@@ -9,9 +9,6 @@ import {checkIfClickedToday} from './src/ifrecored';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const currentDate = moment().format('YYYY-MM-DD');
 
-
-
-
 export default function App() {
   const [popup, setpopup] = useState(false);
   const [text, setText] = useState('');
@@ -47,7 +44,7 @@ export default function App() {
         {!check&&popup && <AddTextInput text={text} setText={setText} />}
       </View>
       <View  style={styles.btn}>
-        <CustomTabBarButton popup={popup} setpopup={setpopup} text = {text} setText={setText} check={check}/>
+        <CustomTabBarButton popup={popup} setpopup={setpopup} text = {text} setText={setText} check={check} setcheck={setcheck}/>
       </View>
     </NavigationContainer>
   );

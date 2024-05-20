@@ -7,9 +7,11 @@ const CustomTabBarButton = ({popup, setpopup,text, setText,check}) => {
     const handlePressOut=()=>{
       if(!check){
         if (popup){
-          saveTextToDatabase(text);
-          console.log("btn popup","save");
-          setText("");
+          if (text !=''){
+            saveTextToDatabase(text);
+            console.log("btn popup","save");
+            setText("");
+          }
         }
         setpopup(!popup);
     }
