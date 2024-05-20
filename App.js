@@ -13,29 +13,16 @@ export default function App() {
   const [popup, setpopup] = useState(false);
   const [text, setText] = useState('');
   const [check, setcheck] = useState(false);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await checkIfClickedToday();
-        console.log("check",result); // 这里的 result 就是异步操作返回的值
-        console.log("popup",popup);
-        if(result){
-          setcheck(true)
-        }else{
-          setcheck(false)
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, [popup]);
-  
-  useEffect(() => {
-    if (check && popup) {
-      setpopup(false); // 如果已经点击，自动关闭 popup
+  const fetchData = async () => {
+    try {
+      AsyncStorage.removeItem('diary');
+      const result = await checkIfClickedToday();
+      setcheck(result);
+    } catch (error) {
+      console.log(error);
     }
-  }, [check]);
+  };
+  fetchData();
 
   return (
     <NavigationContainer>
@@ -44,7 +31,7 @@ export default function App() {
         {!check&&popup && <AddTextInput text={text} setText={setText} />}
       </View>
       <View  style={styles.btn}>
-        <CustomTabBarButton popup={popup} setpopup={setpopup} text = {text} setText={setText} check={check} setcheck={setcheck}/>
+        <CustomTabBarButton popup={popup} setpopup={setpopup} text = {text} setText={setText} checktmp={check}/>
       </View>
     </NavigationContainer>
   );
