@@ -8,10 +8,12 @@ import {
   Alert,
   Image,
 } from 'react-native';
+import Monthpicker from '../monthselector';
 
 export default function App() {
   return (
     <View style={styles.container}>
+      <Monthpicker/>
       <View style={{ height: 150 }}></View>
     </View>
   );

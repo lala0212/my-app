@@ -1,41 +1,53 @@
-import React, { useState, useCallback } from 'react';
-import { View, SafeAreaView, Text } from 'react-native';
-import MonthPicker from 'react-native-month-year-picker';
+import WheelPickerExpo from 'react-native-wheel-picker-expo';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+const Month = 'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'.split(',');
+const Year = '2023,2024'.split(',');
+export default function App() {
+    return (
+      <View  style={styles.container}>
+        <View style={styles.whel_container}>
+          <WheelPickerExpo
+            height={150}
+            width={80}
+            initialSelectedIndex={3}
+            items={Year.map(name => ({ label: name, value: '' }))}
+            selectedStyle={ {borderColor: '#437C90', borderWidth: 3 }}
+            // onChange={({ item }) => setCity(item.label)}
+            />
+        </View>
+        <View style={styles.whel_container}>         
+          <WheelPickerExpo
+          height={150}
+          width={80}
+          initialSelectedIndex={3}
+          items={Month.map(name => ({ label: name, value: '' }))}
+          selectedStyle={ {borderColor: '#437C90', borderWidth: 3 }}
+          // onChange={({ item }) => setCity(item.label)}
+          />
+        </View> 
+      </View>
+    );
+}
 
-const App = () => {
-  const [date, setDate] = useState(new Date());
-  const [show, setShow] = useState(false);
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    backgroundColor: '#fff',
+    borderColor: '#fff',
+    borderWidth: 1,
+    paddingVertical:0,
+    width: 'auto',
+    // height: 60,
+    borderRadius: 10,
+  },
+  whel_container:{
+    width: 100, // Adjust the width as needed
+    alignItems: 'center',
+    justifyContent: 'center',
 
-  const showPicker = useCallback((value) => setShow(value), []);
-
-  const onValueChange = useCallback(
-    (event, newDate) => {
-      const selectedDate = newDate || date;
-
-      showPicker(false);
-      setDate(selectedDate);
-    },
-    [date, showPicker],
-  );
-
-  return (
-    <SafeAreaView>
-      <Text>Month Year Picker Example</Text>
-      <Text>{moment(date, "MM-YYYY")}</Text>
-      <TouchableOpacity onPress={() => showPicker(true)}>
-        <Text>OPEN</Text>
-      </TouchableOpacity>
-      {show && (
-        <MonthPicker
-          onChange={onValueChange}
-          value={date}
-          minimumDate={new Date()}
-          maximumDate={new Date(2025, 5)}
-          locale="ko"
-        />
-      )}
-    </SafeAreaView>
-  );
-};
-
-export default App;
+  },
+})
