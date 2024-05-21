@@ -17,6 +17,7 @@ export default function App() {
     try {
       // AsyncStorage.removeItem('diary');
       const result = await checkIfClickedToday();
+      console.log("App-check",result);
       setcheck(result);
     } catch (error) {
       console.log(error);
@@ -31,6 +32,7 @@ export default function App() {
         {!check&&popup && <AddTextInput text={text} setText={setText} />}
       </View>
       <View  style={styles.btn}>
+        {console.log("App-return",check)}
         <CustomTabBarButton popup={popup} setpopup={setpopup} text = {text} setText={setText} checktmp={check}/>
       </View>
     </NavigationContainer>

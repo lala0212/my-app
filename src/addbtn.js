@@ -5,6 +5,7 @@ import {checkIfClickedToday} from './ifrecored';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const CustomTabBarButton = ({popup, setpopup,text, setText,checktmp}) => {
     const [check, setcheck] = useState(checktmp);
+    console.log("addbtn-checktmp",check)
     const handlePressOut=()=>{
       if(!check){
         if (popup){
@@ -20,7 +21,7 @@ const CustomTabBarButton = ({popup, setpopup,text, setText,checktmp}) => {
     }
     };
   
-    const buttonColor = (!check&&!popup) ?'#ab4622':'#4BAA6A';
+    const buttonColor = (!checktmp&&!check&&!popup) ?'#ab4622':'#4BAA6A'; //red:green
   
     return (
       <TouchableOpacity
@@ -42,7 +43,7 @@ const CustomTabBarButton = ({popup, setpopup,text, setText,checktmp}) => {
             alignItems: 'center', // 水平居中
         }}>
             <Image
-            source={(!check&&!popup)?require('../assets/pen.png'):require('../assets/check2.png') } // 根据当前选中的页面选择图标
+            source={(!checktmp&&!check&&!popup)?require('../assets/pen.png'):require('../assets/check2.png') } // 根据当前选中的页面选择图标
             resizeMode='contain'
             style={{
             width: 28,

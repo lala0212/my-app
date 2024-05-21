@@ -8,15 +8,13 @@ export const checkIfClickedToday = async () => {
       const parsedData = JSON.parse(data);
       const isDatePresent = parsedData.filter(item => item.time ===currentDate);
       if (isDatePresent !='') {
-        console.log("check",true)
         return true;
       }else{
-        console.log("check",false)
         return false;
       }
     } catch (error) {
 
-      //console.log(error);
+      console.log(error);
       return false;
     }
   };
