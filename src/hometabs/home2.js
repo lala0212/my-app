@@ -1,19 +1,27 @@
 import React, { useEffect, useState,useRef } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  Alert,
-  Image,
-} from 'react-native';
+import {  StyleSheet,  View, Image, Text,TouchableOpacity} from 'react-native';
 import Monthpicker from '../monthselector';
-
+import moment from 'moment';
 export default function App() {
+  const currentY = moment().format('YYYY');
+  const currentM = moment().format('MMM');
+  const [Y, setY] = useState(currentY);
+  const [show, setShow] = useState(false);
+  const [M, setM] = useState(currentM);
+
   return (
     <View style={styles.container}>
-      <Monthpicker/>
+      <View style={styles.toptext}>
+        <Text style={styles.dateText}>
+          {M} {Y} 
+        </Text>
+        <TouchableOpacity  onPress={() => setShow(!show)}>
+          <Image source={require('../../assets/select.png')} style={styles.image} />
+        </TouchableOpacity >
+      </View>
+      <View style={{top:200}}>
+      {show&&<Monthpicker Y={Y}M={M} setY={setY} setM={setM} setShow={setShow}/>}
+      </View>
       <View style={{ height: 150 }}></View>
     </View>
   );
@@ -25,45 +33,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#c3d59f',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
-  container2: {
-    flex: 1,
+  toptext:{
     flexDirection: 'row',
-    alignItems: 'stretch',
+    top: 40,
+
   },
-  btn: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderColor: '#437C90',
-    backgroundColor: '#437C90',
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+  dateText:{
+    fontSize: 16.5,
+    fontWeight: 'bold',
+    color: '#D96941',
+
   },
-  btnx: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderColor: '#fff',
-    backgroundColor: '#fff',
-    width: 25,
-    height: 25,
-    borderRadius: 25,
-  },
-  btnText: {
-    fontSize: 40,
-    color:'#fff',
-  },
-  listItem:{
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: 350,
-    backgroundColor: '#fff',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    height:'auto',
-    borderRadius: 10,
-    marginBottom: 15
+  image:{
+    tintColor: '#3f5226',
+    position: 'absolute',
+    right: -23, // 调整偏右的位置，根据需要更改
+    top: 6,
+    width: 13, 
+    height: 13,
   }
 });
