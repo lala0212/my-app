@@ -6,7 +6,7 @@ import MyCalendar from '../myCalendar';
 import ArcCard from '../myCard';
 const currentDate = moment().format('YYYY-MM-DD');
 import {GetDiaryData} from '../getdata.js';
-export default function App({popup}) {
+export default function App() {
   const [selected, setSelected] = useState(" ");
   const [showCard, setShowCard] = useState(false); // 控制 Card 是否显示
   const opacity = useState(new Animated.Value(0))[0];

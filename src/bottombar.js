@@ -1,4 +1,4 @@
-import React, { useState ,useEffect,useRef} from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import { StyleSheet,Text,View,Image, TouchableOpacity} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Act from './hometabs/act'; // Corrected component names
@@ -33,7 +33,7 @@ const Tabs = () => {
         >
             <Tab.Screen
             name={selectedComponent === 'Home' ? "Home" : "Home2"}
-            component={selectedComponent === 'Home' ?  () => <Home popup={popup}/> : () => <Home2 popup={popup} tc={tc}/>}
+            component={selectedComponent === 'Home' ?  () => <Home/> : () => <Home2/>}
             options={{
                 tabBarIcon: ({ focused }) => (
                 <TouchableOpacity
@@ -74,7 +74,7 @@ const Tabs = () => {
             }}/> 
             <Tab.Screen
                 name="Blank"
-                component={selectedComponent === 'Home' ?  () => <Home popup={popup}/> : () => <Home2 popup={popup} tc={tc}/>}
+                component={selectedComponent === 'Home' ?  () => <Home/> : () => <Home2/>}
                 options={{
                     tabBarButton: () => <View style={{ flex: 1 }} />, // 这里使用一个空的 View 作为占位符
                 }}

@@ -8,7 +8,8 @@ import {
   Alert,
   Image,
 } from 'react-native';
-export default function App({popup,tc}) {
+
+export default function App() {
   return (
     <View style={styles.container}>
       <View style={{ height: 150 }}></View>
