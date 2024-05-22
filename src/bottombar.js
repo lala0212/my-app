@@ -26,9 +26,9 @@ const Tabs = () => {
                     elevation: 0,
                     backgroundColor:'#ffffffff',
                     borderRadius: 28,
-                    
                     ...styles.shadow
-                }
+                },
+                headerShown: false,
             }}
         >
             <Tab.Screen

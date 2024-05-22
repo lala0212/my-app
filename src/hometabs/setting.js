@@ -1,17 +1,22 @@
-import React,{useState} from 'react';
+import React,{useState,useContext} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity,Switch,TextInput,Image } from 'react-native';
 import {SaveTextToDatabase,cleandata} from '../testdata'
+import { ThemeContext } from '../themeContext';
+
 export default function App() {
   const [isEnabled, setIsEnabled] = useState(false);
   const [text, setText] = useState("");
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
+  const { isDarkMode, setIsDarkMode } = useContext(ThemeContext);
+  const handleToggle = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
   return (
     <View style={styles.container}>
       <View  style={styles.setitem}>
-        <View style={{flexDirection:"row",alignItems:"center"}}>
+        {/* <View style={{flexDirection:"row",alignItems:"center"}}>
           <Image source={require('../../assets/bell.png')} style={styles.image}></Image>
           <Text style={styles.text}>Daily reminder</Text>
         </View>
@@ -23,7 +28,7 @@ export default function App() {
         value={isEnabled}
       />
       </View>
-      <View style={{height:100}}>
+      <View style={{height:100}}> */}
 
       </View>
       <View  style={styles.setitem}>
@@ -33,10 +38,10 @@ export default function App() {
       </View>
         <Switch
         trackColor={{false: '#767577', true: '#81b0ff'}}
-        thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+        thumbColor={isDarkMode ? '#f5dd4b' : '#f4f3f4'}
         ios_backgroundColor="#3e3e3e"
-        onValueChange={toggleSwitch}
-        value={isEnabled}
+        onValueChange={handleToggle}
+        value={isDarkMode}
       />
       
       </View>
@@ -74,7 +79,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#c3d59f',
     alignItems: 'stretch',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
   },
   setitem:{
     flexDirection:"row",

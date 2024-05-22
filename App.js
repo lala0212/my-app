@@ -6,6 +6,7 @@ import CustomTabBarButton from './src/addbtn';
 import AddTextInput from './src/myTextbox2'
 import moment from 'moment';
 import {checkIfClickedToday} from './src/ifrecored';
+import { ThemeProvider } from './src/themeContext';
 const currentDate = moment().format('YYYY-MM-DD');
 
 export default function App() {
@@ -24,16 +25,18 @@ export default function App() {
   fetchData();
 
   return (
-    <NavigationContainer>
-      <Tabs/>
-      <View style={styles.text}>
-        {!check&&popup && <AddTextInput text={text} setText={setText} />}
-      </View>
-      <View  style={styles.btn}>
-        {console.log("App-return",check)}
-        <CustomTabBarButton popup={popup} setpopup={setpopup} text = {text} setText={setText} checktmp={check}/>
-      </View>
-    </NavigationContainer>
+    <ThemeProvider>
+      <NavigationContainer>
+        <Tabs/>
+        <View style={styles.text}>
+          {!check&&popup && <AddTextInput text={text} setText={setText} />}
+        </View>
+        <View  style={styles.btn}>
+          {console.log("App-return",check)}
+          <CustomTabBarButton popup={popup} setpopup={setpopup} text = {text} setText={setText} checktmp={check}/>
+        </View>
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }
 

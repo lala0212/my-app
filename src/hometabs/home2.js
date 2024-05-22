@@ -1,10 +1,12 @@
-import React, { useEffect, useState,useRef } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import {  StyleSheet,FlatList, View, Image, Text,TouchableOpacity} from 'react-native';
 import Monthpicker from '../monthselector';
 import moment from 'moment';
 import {GetDiaryData} from '../getdata.js';
 const Month = 'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'.split(',');
 import MyCard from '../myCd'
+import { ThemeContext } from '../themeContext';
+import { color } from '@rneui/base';
 export default function App() {
   const currentY = moment().format('YYYY');
   const currentM = moment().format('MMM');
@@ -15,7 +17,7 @@ export default function App() {
   const [selected, setSelect] = useState([]);
   const [showCard, setShowCard] = useState(false);
   const [data, setData] = useState(" ");
-
+  const { theme } = useContext(ThemeContext);
   useEffect(()=>{
     const main = async () => {
       const parsedData = await GetDiaryData(); // 获取日记数据
@@ -44,26 +46,26 @@ export default function App() {
   },[Y,M]);
   
   const renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.card_all}  onPress={() => {setSelect(item.time),setShowCard(!showCard)}}>
-        <View style={styles.date}>
-         <Text style={styles.datetext}>{item.time.slice(8, 10)}</Text>
+    <TouchableOpacity style={[styles.card_all,{backgroundColor:theme.lighttext}]}  onPress={() => {setSelect(item.time),setShowCard(!showCard)}}>
+        <View style={[{backgroundColor:theme.darkblue},styles.date]}>
+          <Text style={[styles.datetext,{color:theme.lighttext}]}>{item.time.slice(8, 10)}</Text>
         </View>
         <View style={styles.card}>
-          <Text style={styles.cardtext} numberOfLines={2} ellipsizeMode="tail">{item.diary}</Text>
+          <Text style={[styles.cardtext,{color:theme.darktext}]} numberOfLines={2} ellipsizeMode="tail">{item.diary}</Text>
         </View>
     </TouchableOpacity>
 );
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
       <View style={styles.toptext}>
-        <Text style={styles.dateText}>
+        <Text style={[styles.dateText,{color:theme.red}]}>
           {M} {Y} 
         </Text>
         <TouchableOpacity  onPress={() => setShow(!show)}>
-          <Image source={require('../../assets/select.png')} style={styles.image} />
+          <Image source={require('../../assets/select.png')} style={[styles.image,{tintColor:theme.darkgreen}]} />
         </TouchableOpacity>
       </View>
-      <View style={styles.separator}/>
+      <View style={[styles.separator,{backgroundColor:theme.darkgreen}]}/>
       <View style={styles.flat} >
         <FlatList
           data={flatdata}
@@ -88,23 +90,20 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
     flex: 1,
-    backgroundColor: '#c3d59f',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
   },
   flat:{
     flex:4,
     alignItems: 'center',
-    
   },
   separator:{
     top:-20,
     height: 2,
     width:350,
-    backgroundColor: '#3f5226',
-    marginVertical:5, // 上下间距
+    marginVertical:5,
     marginBottom:0,
 },
   toptext:{
@@ -117,11 +116,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#ab4622',
-
   },
   image:{
-    tintColor: '#3f5226',
     position: 'absolute',
     right: -23, // 调整偏右的位置，根据需要更改
     top: 5,
@@ -134,7 +130,6 @@ const styles = StyleSheet.create({
   },
   card_all:{
     width:330,
-    backgroundColor:"#fff",
     flexDirection: 'row',
     AlignItems:'stretch',
     margin:8,
@@ -145,20 +140,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 250,
   },
-  cardtext:{
-    color:"#3f5226"
-  },
   date:{
-    // flex:1,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 12,
-    backgroundColor:"#437C90",
     margin:10,
+    borderRadius:12,
     padding:8,
   },
   datetext:{
     fontSize:18,
-    color:"#fff",
   },
 });
