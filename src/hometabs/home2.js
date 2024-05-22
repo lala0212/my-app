@@ -38,7 +38,7 @@ export default function App() {
       Mnum = (Month.indexOf(M)+1);
       Mfor = Mnum< 10 ? '0' + Mnum : Mnum;
       targetPrefix = Y+"-"+ Mfor;
-      setFlatdata(Data.filter(entry => entry.time.startsWith(targetPrefix)));
+      setFlatdata(Data.filter(entry => entry.time.startsWith(targetPrefix)).reverse());
     }
     main();
   },[Y,M]);

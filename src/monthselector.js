@@ -8,6 +8,8 @@ const Month_num = '01,02,03,04,05,06,07,08,09,10,11,12'.split(',');
 
 export default function App({Y,M,setY,setM,setShow}) {
   const [Year, setYear] = useState([Y]);
+  const [stmpM, setStmpM] = useState(M);
+  const [stmpY, setStmpY] = useState(Y);
   useEffect(() => {
     const main = async () => {
       const datar = await GetDiaryData();
@@ -18,42 +20,45 @@ export default function App({Y,M,setY,setM,setShow}) {
     }
     main();
   }, []); 
-  
+  const okbtn = ()=>{
+    setY(stmpY);
+    setM(stmpM);
+    setShow(false);
+  }
   return (
     <View  style={styles.container_top}>
       <View style={styles.container}>
-
-      <View style={styles.whel_container}>         
-        <WheelPickerExpo
-        height={170}
-        width={50}
-        initialSelectedIndex={Month.indexOf(M)}
-        items={Month.map(name => ({ label: name, value: '' }))}
-        selectedStyle={ {borderColor: '#c3d59f', borderWidth: 3 }}
-        // onChange={({ item }) => setCity(item.label)}
-        />
-      </View> 
-      <View style={styles.whel_container}>
-        <WheelPickerExpo
+        <View style={styles.whel_container}>         
+          <WheelPickerExpo
           height={170}
-          width={60}
-          initialSelectedIndex={Year.length-1}
-          items={Year.map(name => ({ label: name, value: '' }))}
+          width={50}
+          initialSelectedIndex={Month.indexOf(M)}
+          items={Month.map(name => ({ label: name}))}
           selectedStyle={ {borderColor: '#c3d59f', borderWidth: 3 }}
-          // onChange={({ item }) => setCity(item.label)}
+          onChange={({ item }) => setStmpM(item.label)}
           />
-      </View>
+        </View> 
+        <View style={styles.whel_container}>
+          <WheelPickerExpo
+            height={170}
+            width={60}
+            initialSelectedIndex={Year.length-1}
+            items={Year.map(name => ({ label: name}))}
+            selectedStyle={ {borderColor: '#c3d59f', borderWidth: 3 }}
+            onChange={({ item }) => setStmpY(item.label)}
+            />
+        </View>
       </View>
       <View style={styles.container}>
         <TouchableOpacity style={[styles.button, { backgroundColor: '#c3d59f'}]}
           onPress={() => setShow(false)}>
           <Text style={styles.buttonText}>Cancel</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, { backgroundColor: '#3f5226' }]}>
+        <TouchableOpacity style={[styles.button, { backgroundColor: '#3f5226' }]}
+        onPress={() => okbtn()}>
           <Text style={styles.buttonText}>OK</Text>
         </TouchableOpacity>
         </View>
-
     </View>
   );
 }
