@@ -65,7 +65,7 @@ const CustomTabBarButton = ({popup, setpopup,text, setText,checktmp}) => {
         },
         shadowOpacity:0.25,
         shadowRadius:3.5,
-        elevation:5
+        elevation:5,
     }
 })
 

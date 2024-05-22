@@ -31,8 +31,7 @@ const MyCalendar = ({ selected, setSelected }) => {
 
   return (
     <Calendar
-  // Date marking style [simple/interactive]. Default = 'simple'
-  markingType='interactive'
+      markingType='interactive'
       onDayPress={(day) => {
         setSelected(day.dateString);
         console.log(day.dateString);
@@ -46,7 +45,7 @@ const MyCalendar = ({ selected, setSelected }) => {
       theme={{
         calendarBackground: '#c3d59f',
         //colors
-        monthTextColor: '#D96941',
+        monthTextColor: '#ab4622',
         textSectionTitleColor: '#3f5226',
         todayTextColor: '#3f5226',
         textDisabledColor: '#748c94',

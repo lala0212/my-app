@@ -6,7 +6,6 @@ import CustomTabBarButton from './src/addbtn';
 import AddTextInput from './src/myTextbox2'
 import moment from 'moment';
 import {checkIfClickedToday} from './src/ifrecored';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 const currentDate = moment().format('YYYY-MM-DD');
 
 export default function App() {
@@ -15,7 +14,6 @@ export default function App() {
   const [check, setcheck] = useState(false);
   const fetchData = async () => {
     try {
-      // AsyncStorage.removeItem('diary');
       const result = await checkIfClickedToday();
       console.log("App-check",result);
       setcheck(result);

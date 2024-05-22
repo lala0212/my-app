@@ -2,6 +2,7 @@ import WheelPickerExpo from 'react-native-wheel-picker-expo';
 import React ,{ useState,useEffect } from 'react';
 import { StyleSheet, Text, View,TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {GetDiaryData} from './getdata.js';
 const Month = 'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'.split(',');
 const Month_num = '01,02,03,04,05,06,07,08,09,10,11,12'.split(',');
 
@@ -9,9 +10,8 @@ export default function App({Y,M,setY,setM,setShow}) {
   const [Year, setYear] = useState([Y]);
   useEffect(() => {
     const main = async () => {
-      const data = await AsyncStorage.getItem('diary');
-      if (data !=null) {
-        const datar = JSON.parse(data);
+      const datar = await GetDiaryData();
+      if (datar !=""){
         const minYear = new Date(datar[0].time).getFullYear();
         setYear(Array.from({ length: Y - minYear + 1 }, (_, index) => minYear + index));
       }
@@ -70,7 +70,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
     backgroundColor: '#fff',
     borderColor: '#fff',
-    borderWidth: 1,
     paddingVertical:0,
     width: 'auto',
     // height: 60,
