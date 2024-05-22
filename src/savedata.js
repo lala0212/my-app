@@ -10,7 +10,8 @@ export const saveTextToDatabase = async (text) => {
             id: Math.random(),
             time: moment().format('YYYY-MM-DD'),
             diary: text,
-            Reflection: "",
+            reflection: "",
+            reflection_pick:false,
         };
         // test
         if (previoustext != null) {

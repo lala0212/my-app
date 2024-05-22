@@ -42,9 +42,9 @@ export default function App() {
           time: randomDate,
           diary: diary,
           reflection: reflection,
+          reflection_pick: (Math.random() < 0.1),
         });
       }
-
       // Sort the data by date
       testData.sort((a, b) => new Date(a.time) - new Date(b.time));
 
