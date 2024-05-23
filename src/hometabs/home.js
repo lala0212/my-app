@@ -38,12 +38,12 @@ export default function App() {
         setShowCard(false);
       }
     };
-
+    
     if (selected !== " ") {
       filterData();
     }
   }, [selected]);
-
+ 
   return (
     <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
       <View style={{ height: 50 }}></View>

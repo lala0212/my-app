@@ -3,16 +3,13 @@ import { StyleSheet,View,Image, TouchableOpacity} from 'react-native';
 import {saveTextToDatabase} from './savedata';
 const CustomTabBarButton = ({popup, setpopup,text,setText,checktmp}) => {
     const [check, setcheck] = useState(checktmp);
-    console.log("addbtn-checktmp",check)
     const handlePressOut=()=>{
       if(!check){
         if (popup){
           if (text !=''){
             saveTextToDatabase(text);
-            console.log("btn popup","save");
             setText("");
             setcheck(true);
-            console.log(check);
           }
         }
         setpopup(!popup);

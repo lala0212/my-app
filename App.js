@@ -4,10 +4,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import Tabs from './src/bottombar';
 import CustomTabBarButton from './src/addbtn';
 import AddTextInput from './src/myTextbox2'
-import moment from 'moment';
 import {checkIfClickedToday} from './src/ifrecored';
 import { ThemeProvider } from './src/themeContext';
-const currentDate = moment().format('YYYY-MM-DD');
 
 export default function App() {
   const [popup, setpopup] = useState(false);
@@ -16,7 +14,6 @@ export default function App() {
   const fetchData = async () => {
     try {
       const result = await checkIfClickedToday();
-      console.log("App-check",result);
       setcheck(result);
     } catch (error) {
       console.log(error);
@@ -32,7 +29,6 @@ export default function App() {
           {!check&&popup && <AddTextInput text={text} setText={setText} />}
         </View>
         <View  style={styles.btn}>
-          {console.log("App-return",check)}
           <CustomTabBarButton popup={popup} setpopup={setpopup} text = {text} setText={setText} checktmp={check}/>
         </View>
       </NavigationContainer>

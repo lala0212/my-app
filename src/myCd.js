@@ -104,6 +104,7 @@ export default function App({ data }) {
                         value={newReflection}
                         onChangeText={setNewReflection}
                         multiline
+                        placeholder={data.reflection}
                     />
                     <View style={{flexDirection:'row', alignContent:"space-around"}}>
                         <TouchableOpacity onPress={() => setModalVisible(false)}>

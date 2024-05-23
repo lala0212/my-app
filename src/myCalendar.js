@@ -24,7 +24,7 @@ const MyCalendar = ({ selected, setSelected }) => {
     };
 
     main();
-  }, []);
+  }, [selected]);
 
 
   return (
