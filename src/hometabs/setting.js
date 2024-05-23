@@ -5,6 +5,7 @@ import {SaveTextToDatabase,cleandata} from '../testdata'
 import { ThemeContext } from '../themeContext';
 
 export default function App() {
+  const { theme } = useContext(ThemeContext);
   const [isEnabled, setIsEnabled] = useState(false);
   const [text, setText] = useState("");
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -14,7 +15,7 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
       <View  style={styles.setitem}>
         {/* <View style={{flexDirection:"row",alignItems:"center"}}>
           <Image source={require('../../assets/bell.png')} style={styles.image}></Image>
@@ -33,12 +34,12 @@ export default function App() {
       </View>
       <View  style={styles.setitem}>
       <View style={{flexDirection:"row",alignItems:"center"}}>
-      <Image source={require('../../assets/moon.png')} style={styles.image}></Image>
-      <Text style={styles.text}>Dark mode</Text>
+      <Image source={require('../../assets/moon.png')} style={[styles.image,{tintColor:theme.darktext}]}></Image>
+      <Text style={[styles.text,{color:theme.darktext}]}>Dark mode</Text>
       </View>
         <Switch
-        trackColor={{false: '#767577', true: '#81b0ff'}}
-        thumbColor={isDarkMode ? '#f5dd4b' : '#f4f3f4'}
+        trackColor={{false: '#767577', true: theme.darkblue}}
+        thumbColor={isDarkMode ? theme.darktext: theme.light}
         ios_backgroundColor="#3e3e3e"
         onValueChange={handleToggle}
         value={isDarkMode}
@@ -46,12 +47,12 @@ export default function App() {
       
       </View>
       <View style={{flexDirection:"row",alignItems:"center"}}>
-      <Image source={require('../../assets/feedback.png')} style={[styles.image,{height:28}]}></Image>
-        <Text style={styles.text}>Feedback</Text>
+      <Image source={require('../../assets/feedback.png')} style={[styles.image,{height:28,right:-2,tintColor:theme.darktext}]}></Image>
+        <Text style={[styles.text,{color:theme.darktext}]}>Feedback</Text>
       </View>
-      <View style={styles.feed}>
+      <View style={{marginVertical:10}}>
         <TextInput
-          style={styles.input}
+          style={[styles.input,{backgroundColor:theme.lighttext}]}
           onChangeText={setText}
           value={text}
           placeholder=""
@@ -60,11 +61,11 @@ export default function App() {
 
       <View  style={styles.setitem}>
         <TouchableOpacity onPress={SaveTextToDatabase}>
-          <Text style={styles.text}>test data</Text>
+          <Text style={[styles.text,{color:theme.darktext}]}>test data</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={cleandata}>
-          <Text style={styles.text}>clear</Text>
+          <Text style={[styles.text,{color:theme.darktext}]}>clear</Text>
         </TouchableOpacity>
       </View>
       
@@ -77,7 +78,6 @@ const styles = StyleSheet.create({
   container: {
     padding:30,
     flex: 1,
-    backgroundColor: '#c3d59f',
     alignItems: 'stretch',
     justifyContent: 'center',
   },
@@ -91,7 +91,6 @@ const styles = StyleSheet.create({
     margin:5,
   },
   input: {
-    backgroundColor: '#fff',
     paddingHorizontal: 20,
     paddingVertical:0,
     width: 'auto',
@@ -101,7 +100,7 @@ const styles = StyleSheet.create({
   },
   image:{
     margin:3,
-    width:25,
-    height:25,
+    width:27,
+    height:27,
   }
 });

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -11,9 +11,9 @@ import {
 import { StatusBar } from 'expo-status-bar';
 import MyTextInput from '../myTextbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { ThemeContext } from '../themeContext';
 export default function App() {
-  
+  const { theme } = useContext(ThemeContext);
   const [todos, setTodos] = useState([]);
   const [text, setText] = useState('');
 
@@ -71,13 +71,13 @@ export default function App() {
 
   const ListItem = ({todo}) => {
     return (
-      <View style={styles.listItem}>
+      <View style={[styles.listItem,{backgroundColor:theme.lighttext}]}>
         <View style={{flex:9}}>
           <Text
             style={{
               fontWeight: 'bold',
               fontSize: 20,
-              color: '#232020',
+              color: theme.darktext,
             }}>
             {todo?.task}
           </Text>
@@ -98,7 +98,8 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
+      <View style={{flex:1}}></View>
       <View style={{flex:7}}>
       <FlatList
         showsVerticalScrollIndicator={false}
@@ -110,8 +111,8 @@ export default function App() {
       <View style={styles.container2}>
         <MyTextInput text={text} setText={setText} ></MyTextInput>
         <View style={{ padding: 20,paddingLeft: 0 ,justifyContent: 'center' }}>
-          <TouchableOpacity onPress={Addtesk} style={styles.btn}>
-            <Text style={styles.btnText}>+</Text>
+          <TouchableOpacity onPress={Addtesk} style={[styles.btn,{backgroundColor:theme.darkblue}]}>
+            <Text style={[styles.btnText,{color:theme.lighttext}]}>+</Text>
           </TouchableOpacity>
         </View>
         <StatusBar style="auto" />
@@ -123,9 +124,8 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
     flex: 1,
-    backgroundColor: '#c3d59f',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -135,33 +135,28 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
   },
   btn: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderColor: '#437C90',
-    backgroundColor: '#437C90',
     width: 60,
     height: 60,
     borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   btnx: {
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: '#fff',
-    backgroundColor: '#fff',
     width: 25,
     height: 25,
     borderRadius: 25,
   },
   btnText: {
-    fontSize: 40,
-    color:'#fff',
+    top:-1,
+    fontSize: 45,
   },
   listItem:{
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     width: 350,
-    backgroundColor: '#fff',
     paddingHorizontal: 20,
     paddingVertical: 10,
     height:'auto',

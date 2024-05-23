@@ -6,7 +6,6 @@ import {GetDiaryData} from '../getdata.js';
 const Month = 'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'.split(',');
 import MyCard from '../myCd'
 import { ThemeContext } from '../themeContext';
-import { color } from '@rneui/base';
 export default function App() {
   const currentY = moment().format('YYYY');
   const currentM = moment().format('MMM');
@@ -57,6 +56,7 @@ export default function App() {
 );
   return (
     <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
+      <View style={{flex:0.3}}></View>
       <View style={styles.toptext}>
         <Text style={[styles.dateText,{color:theme.red}]}>
           {M} {Y} 
@@ -73,8 +73,8 @@ export default function App() {
           keyExtractor={(item, index) => index.toString()}
           showsVerticalScrollIndicator={false}
         />
-        {showCard&&<View style={{paddingVertical:0}} >
-          <View  style={{height:40}}></View>
+        {showCard&&<View style={{height:188}} >
+          <View  style={{height:30}}></View>
           <MyCard data={data}/>
       </View>}
       </View>
@@ -100,10 +100,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   separator:{
-    top:-20,
+    top:-23,
     height: 2,
     width:350,
-    marginVertical:5,
+    marginVertical:3,
     marginBottom:0,
 },
   toptext:{
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   dateText:{
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
   },
   image:{

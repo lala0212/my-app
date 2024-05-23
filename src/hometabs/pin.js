@@ -1,13 +1,15 @@
-import React,{useState, useEffect} from 'react';
+import React,{useState, useEffect,useContext} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View,FlatList,TouchableOpacity,Image } from 'react-native';
 import { GetDiaryData } from '../getdata';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ThemeContext } from '../themeContext';
 export default function App() {
   const [flatdata,setFlatdata] = useState([]);
   const [data,setData] = useState([]);
   const [mark,setMark] = useState([]);
+  const { theme } = useContext(ThemeContext);
   useEffect(()=>{
     const main = async () => {
       const Data = await GetDiaryData(); // 获取日记数据
@@ -46,8 +48,8 @@ export default function App() {
   
   
   const renderItem = ({ item }) => (
-    <View style={styles.card}>
-      <Text style={styles.text}>{item.diary}</Text>
+    <View style={[styles.card,{backgroundColor:theme.lighttext}]}>
+      <Text style={[styles.text,{color:theme.darktext}]}>{item.diary}</Text>
       <TouchableOpacity onPress={() => pick(item)}>
         <Image
           source={require('../../assets/star.png')}
@@ -60,9 +62,10 @@ export default function App() {
  
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
+      <View style={{flex:0.6}}></View>
       <View style={styles.top}>
-        <Text style={styles.texttop}>keep in mind</Text>
+        <Text style={[styles.texttop,{color:theme.darktext}]}>- KEEP IN MIND -</Text>
       </View>
       <View style={styles.flat}>
         <FlatList 
@@ -82,18 +85,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#c3d59f',
     alignItems: 'center',
   },
   texttop:{
-    fontSize:18,
-    color:'#fff'
+    fontSize:20,
+    fontWeight:"bold",
   },
   top:{
     padding:10,
     margin:10,
-    backgroundColor: '#437C90',
-    borderRadius:18,
   },
   flat:{
     height:600,
@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     width: 330,
-    backgroundColor: '#fff',
     paddingHorizontal: 20,
     paddingVertical: 10,
     height:'auto',

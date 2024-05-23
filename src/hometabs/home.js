@@ -1,12 +1,12 @@
-import React ,{ useState,useEffect  } from 'react';
+import React ,{ useState,useEffect,useContext} from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View,Animated ,ImageBackground} from 'react-native';
-import moment from 'moment';
+import { StyleSheet, View,Animated} from 'react-native';
 import MyCalendar from '../myCalendar';
 import MyCard from '../myCd'
-const currentDate = moment().format('YYYY-MM-DD');
 import {GetDiaryData} from '../getdata.js';
+import { ThemeContext } from '../themeContext';
 export default function App() {
+  const { theme } = useContext(ThemeContext);
   const [selected, setSelected] = useState(" ");
   const [showCard, setShowCard] = useState(false); // 控制 Card 是否显示
   const opacity = useState(new Animated.Value(0))[0];
@@ -27,9 +27,7 @@ export default function App() {
   }
 
   useEffect(() => {
-    console.log("selected",selected);
     main();
-    console.log("diary",data!= " ")
     if (selected !== " " && (data!= " ")) {
       setShowText(" ");
       // 先触发动画
@@ -50,18 +48,17 @@ export default function App() {
       
     }
   }, [selected]);
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,{backgroundColor: theme.backgroundColor}]}>
+      <View style={{height:50}}></View>
       <View style={{ paddingTop: 30,paddingBottom: 30 }}>
         <MyCalendar selected={selected} setSelected={setSelected} /></View>
       {showCard && <Animated.View style={{ opacity }}>
         <MyCard data={data}/>
       </Animated.View>}
       <StatusBar style="auto"/>
-    </View>
-    
-       
-    
+    </View>   
   );
 }
 
@@ -71,19 +68,5 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#c3d59f',
-    
-  },
-  card: {
-    backgroundColor: '#fff',
-    borderWidth: 0,
-    borderColor: '#fff',
-    padding: 20,
-    borderRadius: 0,
-    width: 350,
-    height: '45%',
-  },
-  cardText: {
-    backgroundColor: 'transparent', // 设置 Text 的背景色为白色
-  },
+  }
 });

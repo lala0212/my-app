@@ -1,19 +1,17 @@
-import React, { useState, useEffect, useRef} from 'react';
-import { StyleSheet,Text,View,Image, TouchableOpacity} from 'react-native';
+import React, { useState, useContext} from 'react';
+import { StyleSheet,View,Image, TouchableOpacity} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Act from './hometabs/act'; // Corrected component names
 import Home from './hometabs/home';
 import Home2 from './hometabs/home2';
 import Pin from './hometabs/pin';
 import Setting from './hometabs/setting';
-
-
+import { ThemeContext } from './themeContext';
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
+    const { theme } = useContext(ThemeContext);
     const [selectedComponent, setSelectedComponent] = useState('Home');
-    const [popup, setpopup] = useState(true);
-    const tc = useRef("");
     return (
         <Tab.Navigator
             screenOptions={{
@@ -24,36 +22,38 @@ const Tabs = () => {
                     height:75,
                     right:20,
                     elevation: 0,
-                    backgroundColor:'#ffffffff',
+                    backgroundColor:theme.lighttext,
                     borderRadius: 28,
-                    ...styles.shadow
                 },
                 headerShown: false,
             }}
-        >
+        >   
             <Tab.Screen
-            name={selectedComponent === 'Home' ? "Home" : "Home2"}
-            component={selectedComponent === 'Home' ?  () => <Home/> : () => <Home2/>}
+            name={'Home'}
+            component={selectedComponent === 'Home' ?  Home : Home2}
             options={{
                 tabBarIcon: ({ focused }) => (
-                <TouchableOpacity
-                    onPress={() => {
+                    <View style={{alignItems:'center',justifyContent:'center',left:4}}>
+                        <Image
+                        source={selectedComponent === 'Home' ? require('../assets/list.png') : require('../assets/calendar.png')} // 根据当前选中的页面选择图标
+                        resizeMode='contain'
+                        style={{
+                            width: 27,
+                            height: 27,
+                            tintColor: focused ? theme.darkgreen : '#748c94'
+                        }}
+                        />
+                    </View>
+                ),
+                tabBarButton: (props) => (
+                    <TouchableOpacity
+                      {...props}
+                      onPress={() => {
                         setSelectedComponent(selectedComponent === 'Home' ? 'Home2' : 'Home');
-                    }} // 根据当前选中的页面进行切换
-                    activeOpacity={1}
-                    style={{ alignItems: 'center', justifyContent: 'center', top: 0, left: 4 }}
-                >
-                    <Image
-                    source={selectedComponent === 'Home' ? require('../assets/list.png') : require('../assets/calendar.png')} // 根据当前选中的页面选择图标
-                    resizeMode='contain'
-                    style={{
-                        width: 27,
-                        height: 27,
-                        tintColor: focused ? '#3f5226' : '#748c94'
-                    }}
+                        props.onPress();
+                      }}
                     />
-                </TouchableOpacity>
-                )
+                  )
             }}
             />
 
@@ -66,7 +66,7 @@ const Tabs = () => {
                         style={{
                             width:32,
                             height:32,
-                            tintColor:focused?'#3f5226':'#748c94'
+                            tintColor:focused?theme.darkgreen:'#748c94'
 
                         }}/>
                     </View>
@@ -74,7 +74,7 @@ const Tabs = () => {
             }}/> 
             <Tab.Screen
                 name="Blank"
-                component={selectedComponent === 'Home' ?  () => <Home/> : () => <Home2/>}
+                component={Home}
                 options={{
                     tabBarButton: () => <View style={{ flex: 1 }} />, // 这里使用一个空的 View 作为占位符
                 }}
@@ -89,7 +89,7 @@ const Tabs = () => {
                         style={{
                             width:32,
                             height:32,
-                            tintColor:focused?'#3f5226':'#748c94',
+                            tintColor:focused?theme.darkgreen:'#748c94',
 
                         }}/>
                     </View>
@@ -104,7 +104,7 @@ const Tabs = () => {
                         style={{
                             width:28,
                             height:28,
-                            tintColor:focused?'#3f5226':'#748c94',
+                            tintColor:focused?theme.darkgreen:'#748c94',
 
                         }}/>
                     </View>
@@ -114,17 +114,4 @@ const Tabs = () => {
         
     );
 }
-
-const styles =StyleSheet.create({
-    shadow:{
-        shadowColor:'#7f5df0',
-        shadowOffset:{
-            width:0,
-            height:10,
-        },
-        shadowOpacity:0.25,
-        shadowRadius:3.5,
-        elevation:5
-    }
-})
 export default Tabs;

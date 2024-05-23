@@ -1,12 +1,12 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect,useContext } from 'react';
 import { Calendar } from 'react-native-calendars';
 import moment from 'moment';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {GetDiaryData} from './getdata.js';
+import { ThemeContext } from './themeContext';
 const MyCalendar = ({ selected, setSelected }) => {
   const [markedDates, setMarkedDates] = useState({});
   const currentDate = moment().format('YYYY-MM-DD');
-
+  const { theme } = useContext(ThemeContext);
   useEffect(() => {
     const main = async () => {
       const dbDates = await GetDiaryData(); // 获取日记数据
@@ -14,8 +14,9 @@ const MyCalendar = ({ selected, setSelected }) => {
         acc[data.time] = {
           selected: true,        // 标记为选中
           marked: true,          // 标记为已标记
-          selectedColor: '#437C90', // 选中颜色
-          dotColor: 'transparent'   // 点的颜色
+          selectedColor: theme.darkblue, // 选中颜色
+          dotColor: 'transparent',  // 点的颜色
+          text: {color: theme.darktext} // 选中日期文字颜色
         };
         return acc; // 返回更新后的累加器对象
       }, {});
@@ -37,22 +38,24 @@ const MyCalendar = ({ selected, setSelected }) => {
         console.log(day.dateString);
       }}
       markedDates={{
-        [currentDate]: { marked: true, dotColor: '#D96941' },
+        [currentDate]: { marked: true, dotColor: theme.red },
         ...markedDates,
-        [selected]: { selected: true, marked: true, selectedColor: '#3f5226', dotColor: 'transparent' }
+        [selected]: { selected: true, marked: true, selectedColor:theme.darkgreen, dotColor: 'transparent',}
         
       }}
       theme={{
-        calendarBackground: '#c3d59f',
+        calendarBackground: theme.backgroundColor,
         //colors
-        monthTextColor: '#ab4622',
-        textSectionTitleColor: '#3f5226',
-        todayTextColor: '#3f5226',
-        textDisabledColor: '#748c94',
-        dayTextColor: '#3f5226',
-        arrowColor: '#3f5226',
+        monthTextColor: theme.red,
+        textSectionTitleColor: theme.darkgreen,
+        todayTextColor: theme.darktext,
+        textDisabledColor: theme.gray,
+        dayTextColor: theme.darktext,
+        arrowColor: theme.darkgreen,
         //font
+        textMonthFontSize:18,
         textMonthFontWeight: '900',
+        textDayHeaderSize: 16,
         textDayHeaderFontWeight: '800',
        
       }}
@@ -61,10 +64,10 @@ const MyCalendar = ({ selected, setSelected }) => {
         borderWidth: 0,
         height: 350,
         width: 350,
-        backgroundColor: '#c3d59f',
+        backgroundColor:theme.backgroundColor,
       }}
       headerContainerStyle={{
-        backgroundColor: '#c3d59f', // 设置头部容器的背景色
+        backgroundColor: theme.backgroundColor, // 设置头部容器的背景色
       }}
       monthFormat="MMM yyyy"
     />
