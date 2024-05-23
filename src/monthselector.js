@@ -1,12 +1,11 @@
 import WheelPickerExpo from 'react-native-wheel-picker-expo';
 import React ,{ useState,useEffect } from 'react';
 import { StyleSheet, Text, View,TouchableOpacity} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {GetDiaryData} from './getdata.js';
 const Month = 'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'.split(',');
 const Month_num = '01,02,03,04,05,06,07,08,09,10,11,12'.split(',');
 
-export default function App({Y,M,setY,setM,setShow}) {
+export default function App({Y,M,setY,setM,setShow,setModalVisible}) {
   const [Year, setYear] = useState([Y]);
   const [stmpM, setStmpM] = useState(M);
   const [stmpY, setStmpY] = useState(Y);
@@ -24,6 +23,7 @@ export default function App({Y,M,setY,setM,setShow}) {
     setY(stmpY);
     setM(stmpM);
     setShow(false);
+    setModalVisible(false)
   }
   return (
     <View  style={styles.container_top}>
@@ -51,7 +51,7 @@ export default function App({Y,M,setY,setM,setShow}) {
       </View>
       <View style={styles.container}>
         <TouchableOpacity style={[styles.button, { backgroundColor: '#c3d59f'}]}
-          onPress={() => setShow(false)}>
+          onPress={() => {setShow(false),setModalVisible(false)}}>
           <Text style={styles.buttonText}>Cancel</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.button, { backgroundColor: '#3f5226' }]}

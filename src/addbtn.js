@@ -1,9 +1,7 @@
-import React, { useEffect,useState } from 'react';
-import { StyleSheet,Text,View,Image, TouchableOpacity} from 'react-native';
+import React, {useState } from 'react';
+import { StyleSheet,View,Image, TouchableOpacity} from 'react-native';
 import {saveTextToDatabase} from './savedata';
-import {checkIfClickedToday} from './ifrecored';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-const CustomTabBarButton = ({popup, setpopup,text, setText,checktmp}) => {
+const CustomTabBarButton = ({popup, setpopup,text,setText,checktmp}) => {
     const [check, setcheck] = useState(checktmp);
     console.log("addbtn-checktmp",check)
     const handlePressOut=()=>{

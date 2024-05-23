@@ -1,12 +1,14 @@
 import React, { useEffect, useState,useContext } from 'react';
-import {  StyleSheet,FlatList, View, Image, Text,TouchableOpacity} from 'react-native';
+import {  StyleSheet,FlatList, View, Image, Text,TouchableOpacity,Modal} from 'react-native';
 import Monthpicker from '../monthselector';
+import { StatusBar } from 'expo-status-bar';
 import moment from 'moment';
 import {GetDiaryData} from '../getdata.js';
 const Month = 'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'.split(',');
 import MyCard from '../myCd'
 import { ThemeContext } from '../themeContext';
 export default function App() {
+  const [modalVisible, setModalVisible] = useState(false);
   const currentY = moment().format('YYYY');
   const currentM = moment().format('MMM');
   const [Y, setY] = useState(currentY);
@@ -56,12 +58,12 @@ export default function App() {
 );
   return (
     <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
-      <View style={{flex:0.3}}></View>
+      <View style={{ height: 20 }}></View>
       <View style={styles.toptext}>
         <Text style={[styles.dateText,{color:theme.red}]}>
           {M} {Y} 
         </Text>
-        <TouchableOpacity  onPress={() => setShow(!show)}>
+        <TouchableOpacity  onPress={() => {setShow(!show),setModalVisible(true)}}>
           <Image source={require('../../assets/select.png')} style={[styles.image,{tintColor:theme.darkgreen}]} />
         </TouchableOpacity>
       </View>
@@ -73,17 +75,36 @@ export default function App() {
           keyExtractor={(item, index) => index.toString()}
           showsVerticalScrollIndicator={false}
         />
-        {showCard&&<View style={{height:188}} >
+        {showCard&&<View style={{height:152}} >
           <View  style={{height:30}}></View>
           <MyCard data={data}/>
       </View>}
       </View>
-
-      <View style={styles.select}>
-      {show&&<Monthpicker Y={Y} M={M} setY={setY} setM={setM} setShow={setShow}/>}
-      </View>
+      {show&&
+      <View>
+        <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+        >  
+          <View style={{backgroundColor:'#000',width:400,height:800,opacity:0.5}}></View>
+        </Modal>
+        <Modal
+        style={styles.select}
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+        >  
+        <View style={styles.select}>
+          <Monthpicker Y={Y} M={M} setY={setY} setM={setM} setShow={setShow} setModalVisible={setModalVisible}/>
+        </View>
+        </Modal>
+        </View>}
 
       <View style={{ height: 150 }}></View>
+      <StatusBar style="auto" />
     </View>
   );
 }
@@ -96,26 +117,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   flat:{
-    flex:4,
+    top:-5,
+    // flex:4.2,
+    height:450,
     alignItems: 'center',
   },
   separator:{
-    top:-23,
+    top:-25,
     height: 2,
     width:350,
-    marginVertical:3,
+    marginVertical:0,
     marginBottom:0,
 },
   toptext:{
-    flex:1,
+    height:120,
     flexDirection: 'row',
-    top: 48,
+    top: 46,
   },
   dateText:{
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 18.1,
+    fontWeight: '700',
   },
   image:{
     position: 'absolute',
@@ -125,8 +148,9 @@ const styles = StyleSheet.create({
     height: 13,
   },
   select:{
-    position: 'absolute',
-    top: 150,
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: 200,
   },
   card_all:{
     width:330,

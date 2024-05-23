@@ -12,10 +12,14 @@ import { StatusBar } from 'expo-status-bar';
 import MyTextInput from '../myTextbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ThemeContext } from '../themeContext';
+
 export default function App() {
   const { theme } = useContext(ThemeContext);
   const [todos, setTodos] = useState([]);
   const [text, setText] = useState('');
+  useEffect(() => {
+    getTodosFromUserDevice();
+  }, []);
 
   //save data
   useEffect(() => {
@@ -24,18 +28,17 @@ export default function App() {
 
   const saveTodoToUserDevice = async todos => {
     try {
-      const stringifyTodos = JSON.stringify(todos);
-      await AsyncStorage.setItem('todos', stringifyTodos);
+      if (todos.length !== 0){
+        const stringifyTodos = JSON.stringify(todos);
+        await AsyncStorage.setItem('todos', stringifyTodos);
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
   //read data
-  useEffect(() => {
-    getTodosFromUserDevice();
-  }, []);
-
+  
   const getTodosFromUserDevice = async () => {
     try {
       const todos = await AsyncStorage.getItem('todos');
@@ -47,7 +50,7 @@ export default function App() {
     }
   };
 
-  const Addtesk = () => {
+  const addTask  = () => {
     if (text === '') {
       Alert.alert('請輸入文字');
     } else {
@@ -57,7 +60,6 @@ export default function App() {
         time: new Date(),
       };
       setTodos([...todos, newTodo]);
-      console.log("exam",todos)
       setText('');
     }
   };
@@ -99,7 +101,10 @@ export default function App() {
 
   return (
     <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
-      <View style={{flex:1}}></View>
+      <View style={{height:80}}></View>
+      <View style={styles.top}>
+        <Text style={[styles.texttop,{color:theme.darktext}]}>- THINGS TO DO -</Text>
+      </View>
       <View style={{flex:7}}>
       <FlatList
         showsVerticalScrollIndicator={false}
@@ -111,7 +116,7 @@ export default function App() {
       <View style={styles.container2}>
         <MyTextInput text={text} setText={setText} ></MyTextInput>
         <View style={{ padding: 20,paddingLeft: 0 ,justifyContent: 'center' }}>
-          <TouchableOpacity onPress={Addtesk} style={[styles.btn,{backgroundColor:theme.darkblue}]}>
+          <TouchableOpacity onPress={addTask } style={[styles.btn,{backgroundColor:theme.darkblue}]}>
             <Text style={[styles.btnText,{color:theme.lighttext}]}>+</Text>
           </TouchableOpacity>
         </View>
@@ -131,13 +136,15 @@ const styles = StyleSheet.create({
   },
   container2: {
     flex: 1,
+    top:10,
+    marginHorizontal:10,
     flexDirection: 'row',
     alignItems: 'stretch',
   },
   btn: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -149,7 +156,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
   btnText: {
-    top:-1,
+    top:-4,
     fontSize: 45,
   },
   listItem:{
@@ -162,5 +169,9 @@ const styles = StyleSheet.create({
     height:'auto',
     borderRadius: 10,
     marginBottom: 15
-  }
+  },
+  texttop:{
+    fontSize:20,
+    fontWeight:"bold",
+  },
 });

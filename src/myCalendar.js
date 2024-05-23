@@ -16,7 +16,6 @@ const MyCalendar = ({ selected, setSelected }) => {
           marked: true,          // 标记为已标记
           selectedColor: theme.darkblue, // 选中颜色
           dotColor: 'transparent',  // 点的颜色
-          text: {color: theme.darktext} // 选中日期文字颜色
         };
         return acc; // 返回更新后的累加器对象
       }, {});
@@ -26,8 +25,6 @@ const MyCalendar = ({ selected, setSelected }) => {
 
     main();
   }, []);
-
-
 
 
   return (
